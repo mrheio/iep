@@ -7,9 +7,9 @@
 
 class Game {
    private:
-    Game();
-    Game(const Game &);
-    Game &operator=(const Game &);
+    Game();                         // stop default constructor from being used
+    Game(const Game &);             // stop copy consructor from being used
+    Game &operator=(const Game &);  // stop assignment operator from being used
 
    protected:
     std::string name;

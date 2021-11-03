@@ -10,11 +10,10 @@
 class GamingService {
    private:
     GamingService();
+    GamingService(const GamingService &);
+    void operator=(const GamingService &);
 
    public:
-    GamingService(const GamingService &) = delete;
-    void operator=(const GamingService &) = delete;
-
     static GamingService &getInstance();
 
     static std::vector<Game *> games;
