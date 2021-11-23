@@ -1,3 +1,4 @@
+#include "../include/CodeException.hpp"
 #include "../include/Exception.hpp"
 #include "../include/FpsGame.hpp"
 #include "../include/GamingService.hpp"
@@ -16,48 +17,21 @@ int main() {
     exception3.printMessage();
     exception3.setMessage("exception 3 message");
 
-    std::cout << "---------------------------------------------------------------------------------" << std::endl;
+    Exception exception4, exception5, exception6;
+    exception4.setMessage("exception 4 message");
+    exception6 = exception5 = exception4;
+    exception6.printMessage();
 
-    GamingService& gamingService = GamingService::getInstance();
-    int choice;
-    for (;;) {
-        gamingService.printMenu();
-        std::cin >> choice;
-        switch (choice) {
-            case 1: {
-                gamingService.createAndAddGame("fps");
-                break;
-            }
-            case 2: {
-                gamingService.createAndAddGame("adventure");
-                break;
-            }
-            case 3: {
-                gamingService.createAndAddGame("strategy");
-                break;
-            }
-            case 4: {
-                gamingService.printGames();
-                break;
-            }
-            case 5: {
-                gamingService.removeGame();
-                break;
-            }
-            case 6: {
-                gamingService.removeAll();
-                break;
-            }
-            case 7: {
-                gamingService.playGame();
-                break;
-            }
-            default: {
-                GamingService::removeAll();
-                return 0;
-            }
-        }
-    }
-    GamingService::removeAll();
+    FpsGame* fpsGame = new FpsGame("Doom", 1);
+
+    CodeException codeException1(404, fpsGame, "Not found");
+    CodeException codeException2(codeException1);
+    codeException2.printMessage();
+    codeException2.setMessage("Doom was not found");
+
+    CodeException codeException3;
+    codeException3 = codeException2;
+    codeException3.printMessage();
+
     return 0;
 }
