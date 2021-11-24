@@ -5,8 +5,10 @@ project(main)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(include)
+# include_directories(include)
 
-file(GLOB SOURCES "src/*.cpp")
+# file(GLOB SOURCES "src/*.cpp")
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+# add_executable(${PROJECT_NAME} ${SOURCES})
+
+add_subdirectory(src)
