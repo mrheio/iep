@@ -8,16 +8,16 @@ Exception::Exception(FpsGame* fpsGame, std::string message) : fpsGame(fpsGame), 
 
 Exception& Exception::operator=(const Exception& rhs) {
     if (this == &rhs) {
-        std::cout << "Self-assignment" << std::endl;
+        std::cout << "Self-assignment" << std::endl;  // print if this and rhs point to the same address => same object
     }
 
-    FpsGame* oldFpsGame = rhs.fpsGame;
-    fpsGame = new FpsGame(rhs.fpsGame->getName(), rhs.fpsGame->getNumberOfPlayers());
-    delete oldFpsGame;
+    FpsGame* oldFpsGame = fpsGame;                                                         // copy this fpsGame pointer to another pointer
+    fpsGame = new FpsGame((*rhs.fpsGame).getName(), (*rhs.fpsGame).getNumberOfPlayers());  // make this fpsGame pointer point to a new address
+    delete oldFpsGame;                                                                     // delete old this fpsGame unused address
 
     message = rhs.message;
 
-    return *this;
+    return *this;  //return reference to *this
 }
 
 FpsGame* Exception::getFpsGame() {
@@ -33,5 +33,7 @@ void Exception::setMessage(std::string message) {
 }
 
 void Exception::printMessage() {
-    std::cout << *fpsGame << "MESSAGE: [" << message << "]" << std::endl;
+    std::cout
+        << *fpsGame << "MESSAGE: [" << message << "]" << std::endl
+        << "------------------------------" << std::endl;
 }

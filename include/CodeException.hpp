@@ -15,5 +15,6 @@ class CodeException : public Exception {
     CodeException(int code, FpsGame* fpsGame, std::string message);
     CodeException(const CodeException& rhs);
     CodeException& operator=(const CodeException& rhs);
+    void printMessage();
 };
 #endif
