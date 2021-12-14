@@ -1,40 +1,29 @@
-#include "../include/CodeException.hpp"
-#include "../include/Exception.hpp"
-#include "../include/FpsGame.hpp"
-#include "../include/GamingService.hpp"
+#include "../include/GameCreator.hpp"
+#include "../include/Store.hpp"
 
 int main() {
-    // Exception exception1;  // default generated constructor called
-    // exception1.setMessage("exception 1 message");
-    // exception1.printMessage();
-    // Exception exception2(exception1);  // default generated copy constructor called
-    // exception2.printMessage();
-    // exception2.setMessage("exception 2 message");
-    // exception2.printMessage();
-    // Exception exception3 = exception1;  // default generated copy constructor called
-    // exception3.printMessage();
-    // exception3 = exception2;  // default generated copy assignment operator called
-    // exception3.printMessage();
-    // exception3.setMessage("exception 3 message");
+    std::shared_ptr<Game> fpsGame1 = GameCreator::createFpsGame("Doom", 1);
+    std::shared_ptr<Game> fpsGame2 = GameCreator::createFpsGame("Call of Duty", 1);
+    std::shared_ptr<Game> fpsGame3 = GameCreator::createFpsGame("Battlefield", 128);
 
-    Exception exception4, exception5, exception6;
-    exception4.setMessage("exception 4 message");
-    exception6 = exception5 = exception4;
-    exception4 = exception4;
-    exception4.printMessage();
-    exception5.printMessage();
-    exception6.printMessage();
+    std::shared_ptr<Game> adventureGame1 = GameCreator::createAdventureGame("Uncharted", 1);
+    std::shared_ptr<Game> adventureGame2 = GameCreator::createAdventureGame("Witcher", 1);
 
-    FpsGame* fpsGame = new FpsGame("Doom", 1);
+    std::shared_ptr<Game> strategyGame1 = GameCreator::createStrategyGame("Starcraft", 4);
+    std::shared_ptr<Game> strategyGame2 = GameCreator::createStrategyGame("Warcraft", 4);
+    std::shared_ptr<Game> strategyGame3 = GameCreator::createStrategyGame("Company of Heroes", 1);
+    std::shared_ptr<Game> strategyGame4 = GameCreator::createStrategyGame("Command and Conquer", 1);
 
-    CodeException codeException1(404, fpsGame, "Not found");
-    CodeException codeException2(codeException1);
-    codeException2.printMessage();
+    // a game can be owned (shared) by multiple stores
+    // each store is unique
+    std::unique_ptr<Store> store1 = Store::createStore("GamingIndustry", {fpsGame1, fpsGame2, strategyGame1});
+    std::unique_ptr<Store> store2 = Store::createStore("Gamer4Life", {fpsGame2, adventureGame1, adventureGame2, strategyGame1});
+    std::unique_ptr<Store> store3 = Store::createStore("BestGameStore", {fpsGame3, fpsGame2, adventureGame1, strategyGame3, strategyGame4, strategyGame1});
 
-    codeException2.setMessage("Doom was not found");
-    CodeException codeException3;
-    codeException3 = codeException2;
-    codeException3.printMessage();
-
+    store1->printGames();
+    store1->removeGame("Doom");
+    store1->printGames();
+    store1->addGame(fpsGame1);
+    store1->printGames();
     return 0;
 }
