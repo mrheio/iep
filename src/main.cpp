@@ -8,10 +8,11 @@ std::mutex mutex;
 int counter = 0;
 
 void doSomething(int id) {
+    // Lock wrapper class will lock the mutex on constructor call
     Lock mutexLock(&mutex);
-    std::cout << "Thread: " << id << std::endl;
-    std::cout << "Counter: " << counter << std::endl;
+    std::cout << "T: [" << id << "] - Counter: " << counter << std::endl;
     counter++;
+    // when done, Lock destructor will unlock the mutex
 }
 
 int main() {
