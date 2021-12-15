@@ -1,5 +1,18 @@
+#include <thread>
+
 #include "../include/GameCreator.hpp"
+#include "../include/Lock.hpp"
 #include "../include/Store.hpp"
+
+std::mutex mutex;
+int counter = 0;
+
+void doSomething(int id) {
+    Lock mutexLock(&mutex);
+    std::cout << "Thread: " << id << std::endl;
+    std::cout << "Counter: " << counter << std::endl;
+    counter++;
+}
 
 int main() {
     std::shared_ptr<Game> fpsGame1 = GameCreator::createFpsGame("Doom", 1);
@@ -25,5 +38,19 @@ int main() {
     store1->printGames();
     store1->addGame(fpsGame1);
     store1->printGames();
+
+    std::cout << "Creating 5 threads..." << std::endl;
+    std::thread t1(doSomething, 1);
+    std::thread t2(doSomething, 2);
+    std::thread t3(doSomething, 3);
+    std::thread t4(doSomething, 4);
+    std::thread t5(doSomething, 5);
+
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    t5.join();
+
     return 0;
 }
